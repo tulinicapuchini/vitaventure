@@ -1,0 +1,83 @@
+---
+interface Props {
+  productName: string;
+  affiliateUrl: string;
+  discountCode?: string;
+  badge?: string;
+  description: string;
+  bullets?: string[];
+  imageUrl?: string;
+  ctaText?: string;
+}
+
+const {
+  productName,
+  affiliateUrl,
+  discountCode,
+  badge = 'VitaVenture Verified Recommendation',
+  description,
+  bullets = [],
+  imageUrl,
+  ctaText = 'Check Latest Price & Claim Discount',
+} = Astro.props;
+---
+
+<aside class="my-8 rounded-2xl bg-gradient-to-br from-amber-50/90 via-white to-amber-50/50 border-2 border-amber-300/80 shadow-md p-6 sm:p-7 not-prose relative overflow-hidden">
+  <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-200/80 text-amber-900 border border-amber-300">
+      ★ {badge}
+    </span>
+    {discountCode && (
+      <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+        Code: <strong class="font-mono font-bold">{discountCode}</strong>
+      </span>
+    )}
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-6 items-start mt-4">
+    {imageUrl && (
+      <div class="w-full sm:w-36 h-36 shrink-0 rounded-xl bg-white border border-slate-200 p-2 flex items-center justify-center overflow-hidden">
+        <img src={imageUrl} alt={productName} class="w-full h-full object-contain" />
+      </div>
+    )}
+
+    <div class="flex-1 space-y-3">
+      <h3 class="serif-heading text-xl font-bold text-slate-900 leading-snug">
+        {productName}
+      </h3>
+
+      <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+        {description}
+      </p>
+
+      {bullets && bullets.length > 0 && (
+        <ul class="space-y-1.5 text-xs text-slate-600 pt-1">
+          {bullets.map((b) => (
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-600 font-bold">✓</span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div class="pt-2">
+        <a
+          href={affiliateUrl}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-sm hover:shadow active:scale-95"
+        >
+          <span>{ctaText}</span>
+          <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 pt-3 border-t border-amber-200/60 text-[11px] text-slate-500 leading-relaxed italic">
+    *Affiliate Disclosure: If you purchase through our links, VitaVenture may earn an affiliate commission at no additional cost to you. We exclusively recommend protocols and products we independently analyze and verify.
+  </div>
+</aside>

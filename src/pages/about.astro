@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NewsletterBox from '../components/NewsletterBox.astro';
+---
+
+<Layout
+  title="About VitaVenture — Scientific Longevity & Lifestyle Philosophy"
+  description="Discover the mission, editorial standards, and evidence-based methodology behind VitaVenture."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
+    
+    <!-- Hero Header -->
+    <div class="space-y-4 max-w-3xl">
+      <span class="text-xs font-bold uppercase tracking-widest text-sage-800 block">Our Core Mission</span>
+      <h1 class="serif-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
+        Empowering Longevity, Strength & Vitality Through Rigorous Science.
+      </h1>
+      <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
+        VitaVenture exists to cut through the noise of superficial wellness fads, bro-science myths, and sensationalized headlines—delivering clear, actionable protocols grounded in human physiology and peer-reviewed trials.
+      </p>
+    </div>
+
+    <!-- The 3 Pillars of VitaVenture -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose">
+      <div class="editorial-card p-6 space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-sage-100 text-sage-800 flex items-center justify-center font-bold text-lg">
+          01
+        </div>
+        <h3 class="serif-heading text-lg font-bold text-slate-900">Clinical Evidence First</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          We prioritize randomized double-blind clinical trials, systematic reviews, and meta-analyses over single rodent studies or anecdotal testimonials.
+        </p>
+      </div>
+
+      <div class="editorial-card p-6 space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg">
+          02
+        </div>
+        <h3 class="serif-heading text-lg font-bold text-slate-900">Practical Protocols</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Theory without application is useless. Every piece of research is translated into exact dosages, timings, synergies, and contraindications.
+        </p>
+      </div>
+
+      <div class="editorial-card p-6 space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-lg">
+          03
+        </div>
+        <h3 class="serif-heading text-lg font-bold text-slate-900">Active Life After 40</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Specialized guidance for adults balancing careers, families, and aging physiology—fighting sarcopenia, enhancing cognition, and restoring hormonal equilibrium.
+        </p>
+      </div>
+    </div>
+
+    <!-- Editorial Integrity & Story -->
+    <div class="prose prose-slate lg:prose-lg max-w-none pt-6">
+      <h2>The VitaVenture Story</h2>
+      <p>
+        VitaVenture began as a personal quest. After decades of playing competitive sports in youth and early adulthood, life accelerated—corporate obligations, family responsibilities, and compounding chronic stress slowly eroded regular exercise and nutritional discipline.
+      </p>
+      <p>
+        Upon crossing the age of 45 and recommitting to high-level physical training, the realization struck: the recovery strategies and nutrition rules that worked at age 22 were no longer sufficient. Aging physiology requires precision—targeting cellular ATP regeneration, overcoming anabolic resistance, shielding cognitive clarity, and supporting joint integrity.
+      </p>
+      <p>
+        What started as an obsessive dive into PubMed and longevity medicine evolved into <strong>VitaVenture</strong>: an open publication and lifestyle platform providing fellow professionals with the research, tools, and protocols to operate at their biological best.
+      </p>
+
+      <h2>Our Editorial Standards</h2>
+      <ul>
+        <li><strong>Full Citation Transparency:</strong> Every protocol specifies direct DOI or PubMed links to original clinical literature.</li>
+        <li><strong>No Dogma:</strong> We are not loyal to any single diet cult (Keto, Carnivore, Vegan, or Fasting). We examine biological mechanisms pragmatically.</li>
+        <li><strong>Safety & Renal/Liver Health:</strong> We explicitly warn about potential side effects, interactions with prescription medications, and when to seek physician guidance.</li>
+      </ul>
+
+      <h2>The Autonomous Publishing Engine</h2>
+      <p>
+        To ensure consistent research breakdowns across multiple mediums, VitaVenture harnesses an autonomous multi-agent content engine powered by custom AI research directors and n8n workflows. This pipeline translates deep clinical reviews into long-form editorial essays, high-density 60-second video reels, and concise social threads—all rigorously reviewed and curated by human practitioners before publication.
+      </p>
+    </div>
+
+    <!-- Newsletter -->
+    <NewsletterBox />
+
+  </div>
+</Layout>

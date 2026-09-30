@@ -1,0 +1,68 @@
+---
+interface Props {
+  headline?: string;
+  subtext?: string;
+}
+
+const {
+  headline = 'Get the Science-Backed Sunday Protocol',
+  subtext = 'Join 10,000+ executives, biohackers, and fitness enthusiasts getting our concise weekly breakdown of longevity research, actionable protocols, and practical health breakdowns.',
+} = Astro.props;
+---
+
+<section id="newsletter" class="my-16 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-850 to-sage-950 text-white p-8 sm:p-12 shadow-xl border border-slate-800 relative overflow-hidden">
+  <!-- Subtle background glow -->
+  <div class="absolute -right-20 -top-20 w-80 h-80 bg-sage-600/20 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-2xl mx-auto text-center relative z-10 space-y-4">
+    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-sage-900/90 text-sage-300 border border-sage-700/60">
+      ⚡ Every Sunday Morning
+    </span>
+
+    <h2 class="serif-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+      {headline}
+    </h2>
+
+    <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl mx-auto">
+      {subtext}
+    </p>
+
+    <form class="pt-4 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" id="newsletter-box-form">
+      <input
+        type="email"
+        placeholder="Enter your email address"
+        required
+        class="flex-1 px-4 py-3 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sage-500"
+      />
+      <button
+        type="submit"
+        class="px-6 py-3 bg-sage-600 hover:bg-sage-500 text-white font-semibold text-sm rounded-xl transition-all shadow-md active:scale-95 shrink-0"
+      >
+        Subscribe Free
+      </button>
+    </form>
+    <script>
+      const nlForm = document.getElementById('newsletter-box-form');
+      nlForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Welcome to VitaVenture! Check your inbox for the inaugural Protocol Guide.');
+      });
+    </script>
+
+    <div class="flex items-center justify-center gap-6 pt-3 text-xs text-slate-400">
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        Zero spam
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        Peer-reviewed citations
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        1-click unsubscribe
+      </span>
+    </div>
+  </div>
+</section>

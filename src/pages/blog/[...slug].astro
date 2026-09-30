@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import NewsletterBox from '../../components/NewsletterBox.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const formattedDate = entry.data.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout
+  title={`${entry.data.title} — VitaVenture Research`}
+  description={entry.data.description}
+  type="article"
+  publishDate={entry.data.pubDate}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    
+    <!-- Breadcrumb & Category Header -->
+    <header class="space-y-6 text-center max-w-3xl mx-auto border-b border-slate-200 pb-10">
+      <div class="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider">
+        <a href="/blog" class="text-slate-500 hover:text-slate-900 transition-colors">Articles</a>
+        <span class="text-slate-300">/</span>
+        <a href={`/blog?category=${encodeURIComponent(entry.data.category)}`} class="text-sage-800 hover:text-sage-900 transition-colors">
+          {entry.data.category}
+        </a>
+      </div>
+
+      <h1 class="serif-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-[1.15]">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+        {entry.data.description}
+      </p>
+
+      <!-- Author & Metadata Bar -->
+      <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 pt-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-2xs p-1 flex items-center justify-center overflow-hidden shrink-0">
+            <img src="/images/logo.png" alt="VitaVenture" class="w-full h-full object-contain" />
+          </div>
+          <div class="text-left">
+            <span class="font-bold text-slate-900 block leading-tight">{entry.data.author}</span>
+            <span class="text-[11px] text-slate-500">{entry.data.authorRole}</span>
+          </div>
+        </div>
+        <span class="text-slate-300 hidden sm:inline">&bull;</span>
+        <time datetime={entry.data.pubDate.toISOString()}>{formattedDate}</time>
+        <span class="text-slate-300 hidden sm:inline">&bull;</span>
+        <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full">{entry.data.readTime}</span>
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <div class="prose prose-slate lg:prose-lg max-w-none mx-auto pt-10">
+      <Content />
+    </div>
+
+    <!-- Scientific References Section (if defined in frontmatter) -->
+    {entry.data.scientificReferences && entry.data.scientificReferences.length > 0 && (
+      <section class="mt-16 pt-8 border-t border-slate-200">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-6 h-6 rounded-md bg-sage-800 text-white flex items-center justify-center text-xs font-bold">
+            ¶
+          </div>
+          <h2 class="serif-heading text-xl font-bold text-slate-900">
+            Peer-Reviewed Scientific References
+          </h2>
+        </div>
+        <ol class="space-y-3 text-xs sm:text-sm text-slate-600 list-decimal pl-5">
+          {entry.data.scientificReferences.map((ref) => (
+            <li class="leading-relaxed">
+              <span>{ref.citation}</span>
+              <em class="text-slate-800 block sm:inline sm:ml-1">({ref.journal}{ref.year ? `, ${ref.year}` : ''})</em>
+              {ref.doiOrUrl && (
+                <a
+                  href={ref.doiOrUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sage-700 hover:text-sage-900 underline ml-1 font-medium inline-flex items-center gap-0.5"
+                >
+                  [PubMed / Source &nearr;]
+                </a>
+              )}
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    <!-- Interactive Tool Re-Engagement -->
+    <div class="my-12 p-6 rounded-2xl bg-amber-50 border border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 block mb-1">Companion Tool</span>
+        <h3 class="serif-heading text-lg font-bold text-slate-900">Calculate Your Exact Dosage</h3>
+        <p class="text-xs text-slate-600">Get your personalized daily saturation target based on body weight, age, and activity level.</p>
+      </div>
+      <a href="/tools" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs shrink-0">
+        Open Calculator &rarr;
+      </a>
+    </div>
+
+    <!-- Article Bottom Sharing & Navigation -->
+    <div class="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="/blog" class="text-sm font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-2">
+        &larr; Back to All Articles
+      </a>
+      
+      <div class="flex items-center gap-3 text-xs text-slate-500">
+        <span>Share Protocol:</span>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(Astro.url.href)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+          aria-label="Share on X"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Newsletter Capture -->
+    <NewsletterBox />
+
+  </article>
+</Layout>

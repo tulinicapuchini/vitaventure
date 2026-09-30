@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-page: #FAF9F6;
+    --text-main: #0F172A;
+    --accent-sage: #164E30;
+    --accent-amber: #D97706;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background-color: #C2DFCE;
+    color: #0E2E1D;
+  }
+}
+
+@layer components {
+  .serif-heading {
+    font-family: 'Newsreader', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+
+  .badge-category {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide uppercase;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-sage-800 text-white font-medium text-sm transition-all duration-200 hover:bg-sage-900 hover:shadow-md active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-paper-200 text-slate-800 font-medium text-sm border border-slate-200 transition-all duration-200 hover:bg-paper-300 hover:border-slate-300 active:scale-[0.98];
+  }
+
+  .editorial-card {
+    @apply bg-white rounded-2xl border border-slate-200/80 shadow-sm transition-all duration-300 hover:shadow-md hover:border-slate-300;
+  }
+}

@@ -1,0 +1,36 @@
+---
+interface Props {
+  activeCategory?: string;
+}
+
+const { activeCategory = 'All' } = Astro.props;
+
+const categories = [
+  'All',
+  'Supplements',
+  'Nutrition',
+  'Longevity',
+  'Fitness Over 40',
+  'Mind & Sleep',
+  'Recovery',
+];
+---
+
+<div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none not-prose">
+  {categories.map((cat) => {
+    const isSelected = activeCategory === cat;
+    const href = cat === 'All' ? '/blog' : `/blog?category=${encodeURIComponent(cat)}`;
+    return (
+      <a
+        href={href}
+        class={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
+          isSelected
+            ? 'bg-slate-900 text-white shadow-sm'
+            : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/80'
+        }`}
+      >
+        {cat}
+      </a>
+    );
+  })}
+</div>

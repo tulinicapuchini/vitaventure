@@ -1,0 +1,25 @@
+---
+interface Props {
+  points: string[];
+}
+
+const { points } = Astro.props;
+---
+
+<div class="my-8 rounded-2xl bg-paper-100 border border-slate-200/90 p-6 sm:p-7 not-prose">
+  <div class="flex items-center gap-2 mb-4">
+    <div class="w-6 h-6 rounded-md bg-sage-800 text-white flex items-center justify-center font-bold text-xs">
+      ✓
+    </div>
+    <h3 class="serif-heading text-lg font-bold text-slate-900 tracking-tight">Key Takeaways & Findings</h3>
+  </div>
+
+  <ul class="space-y-3">
+    {points.map((point) => (
+      <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-sage-600 mt-2 shrink-0"></span>
+        <span>{point}</span>
+      </li>
+    ))}
+  </ul>
+</div>

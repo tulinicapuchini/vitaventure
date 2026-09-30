@@ -1,0 +1,120 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { name: 'Articles', href: '/blog' },
+  { name: 'Video Hub', href: '/videos' },
+  { name: 'Protocol Tools', href: '/tools' },
+  { name: 'About & Science', href: '/about' },
+];
+---
+
+<header class="sticky top-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-24">
+      
+      <!-- Brand Logo & Name (Enlarged & Prominent) -->
+      <a href="/" class="flex items-center gap-3.5 sm:gap-4 group py-1">
+        <div class="relative h-14 w-14 sm:h-16 sm:w-16 md:h-18 md:w-18 shrink-0 flex items-center justify-center rounded-2xl bg-white p-1.5 shadow-sm border border-slate-200/90 group-hover:border-sage-600 transition-all duration-300 group-hover:shadow-md">
+          <img src="/images/logo.png" alt="VitaVenture Logo" class="w-full h-full object-contain transform group-hover:scale-105 transition-transform" />
+        </div>
+        <div>
+          <span class="serif-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 group-hover:text-sage-700 transition-colors block leading-none">
+            VitaVenture
+          </span>
+          <span class="text-[11px] sm:text-xs font-bold tracking-widest uppercase text-sage-800 block mt-1.5">
+            Science &bull; Longevity &bull; Protocols
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
+        {navLinks.map((link) => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              class={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+                isActive
+                  ? 'bg-sage-100/70 text-sage-800 font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+              }`}
+            >
+              {link.name}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- Right Actions -->
+      <div class="flex items-center gap-3">
+        <a
+          href="/tools"
+          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200/80 rounded-full hover:bg-amber-100/80 transition-colors"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+          Creatine Calculator
+        </a>
+
+        <a
+          href="#newsletter"
+          class="btn-primary"
+        >
+          <span>Subscribe Free</span>
+          <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Toggle mobile menu"
+          class="md:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg focus:outline-none"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-[#FAF9F6] px-4 pt-3 pb-5 space-y-1">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-sage-50 hover:text-sage-800"
+      >
+        {link.name}
+      </a>
+    ))}
+    <div class="pt-3 border-t border-slate-200">
+      <a
+        href="/tools"
+        class="block w-full text-center px-4 py-2.5 text-sm font-semibold rounded-lg text-amber-800 bg-amber-50 border border-amber-200"
+      >
+        ⚡ Creatine & Protein Calculator
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+</script>

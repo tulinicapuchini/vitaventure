@@ -1,0 +1,266 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Interactive Creatine & Protein Calculator — VitaVenture Tools"
+  description="Calculate your personalized daily creatine dosage, optimal protein target, and hydration protocols backed by exercise physiology and longevity science."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300/80">
+        ⚡ Evidence-Based Clinical Tool
+      </span>
+      <h1 class="serif-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
+        Personalized Creatine & Protein Calculator
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+        Enter your physical metrics to compute evidence-backed targets for muscle saturation, daily protein synthesis, and cellular hydration.
+      </p>
+    </div>
+
+    <!-- Calculator Card -->
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-lg p-6 sm:p-10 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Input Form -->
+        <div class="space-y-6">
+          <h2 class="serif-heading text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">
+            Your Body Metrics
+          </h2>
+
+          <!-- Unit Selector -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Unit System</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                id="unit-lbs"
+                class="unit-btn active px-4 py-2.5 text-xs font-bold rounded-xl border border-slate-200 bg-slate-900 text-white transition-all"
+              >
+                Pounds (lbs)
+              </button>
+              <button
+                type="button"
+                id="unit-kg"
+                class="unit-btn px-4 py-2.5 text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all"
+              >
+                Kilograms (kg)
+              </button>
+            </div>
+          </div>
+
+          <!-- Weight Input -->
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label for="weight-input" class="text-xs font-bold uppercase tracking-wider text-slate-500">Body Weight</label>
+              <span id="weight-display" class="font-mono text-sm font-semibold text-slate-800">180 lbs</span>
+            </div>
+            <input
+              type="range"
+              id="weight-input"
+              min="100"
+              max="350"
+              value="180"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sage-700"
+            />
+          </div>
+
+          <!-- Age Input -->
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label for="age-input" class="text-xs font-bold uppercase tracking-wider text-slate-500">Current Age</label>
+              <span id="age-display" class="font-mono text-sm font-semibold text-slate-800">45 years</span>
+            </div>
+            <input
+              type="range"
+              id="age-input"
+              min="20"
+              max="85"
+              value="45"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sage-700"
+            />
+          </div>
+
+          <!-- Activity Level -->
+          <div>
+            <label for="activity-select" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Weekly Activity Level</label>
+            <select
+              id="activity-select"
+              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-sage-600"
+            >
+              <option value="sedentary">Sedentary (Desk work, light walking)</option>
+              <option value="moderate">Moderate (Exercise 2-3x / week)</option>
+              <option value="strength" selected>Resistance Training (Strength 3-5x / week)</option>
+              <option value="athlete">High-Intensity Athlete / Daily Training</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Real-Time Results Column -->
+        <div class="bg-paper-100 rounded-2xl border border-slate-200/90 p-6 sm:p-7 flex flex-col justify-between space-y-6">
+          <div>
+            <h2 class="serif-heading text-xl font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center justify-between">
+              <span>Your Daily Protocol</span>
+              <span class="text-xs font-sans font-semibold text-sage-800 bg-sage-100 px-2.5 py-0.5 rounded-full">Target Saturation</span>
+            </h2>
+
+            <!-- Metric 1: Creatine Target -->
+            <div class="mt-5 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+              <span class="text-xs font-bold uppercase text-slate-500 block">Daily Creatine Monohydrate</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="creatine-result" class="text-3xl font-extrabold text-sage-800 font-mono">5.0</span>
+                <span class="text-sm font-bold text-slate-600">grams / day</span>
+              </div>
+              <p id="creatine-subtext" class="text-xs text-slate-500 mt-1">
+                Steady saturation protocol (no loading phase required).
+              </p>
+            </div>
+
+            <!-- Metric 2: Protein Target -->
+            <div class="mt-4 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+              <span class="text-xs font-bold uppercase text-slate-500 block">Daily Dietary Protein Goal</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="protein-result" class="text-3xl font-extrabold text-slate-900 font-mono">145</span>
+                <span class="text-sm font-bold text-slate-600">grams / day</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">
+                Optimized for myofibrillar protein synthesis and muscle preservation over 40.
+              </p>
+            </div>
+
+            <!-- Metric 3: Water Intake -->
+            <div class="mt-4 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+              <span class="text-xs font-bold uppercase text-slate-500 block">Recommended Hydration Base</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="water-result" class="text-2xl font-bold text-slate-800 font-mono">3.2</span>
+                <span class="text-sm font-semibold text-slate-600">Liters / day</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">
+                Essential to support cellular hydration and renal clearance.
+              </p>
+            </div>
+          </div>
+
+          <!-- Scientific Rationale Note -->
+          <div class="text-xs text-slate-600 bg-white/70 p-3.5 rounded-xl border border-slate-200/60 leading-relaxed">
+            <strong class="font-semibold text-slate-800">Timing Strategy:</strong> Take creatine post-workout or with your first carbohydrate/protein meal. Splitting protein into 3-4 meals of 30-45g maximizes muscle protein synthesis (MPS).
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Related Scientific Breakdown Link -->
+    <div class="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="badge-category bg-sage-100 text-sage-800 mb-1">Deep Dive Article</span>
+        <h3 class="serif-heading text-lg font-bold text-slate-900">
+          Want the clinical evidence behind this dosage?
+        </h3>
+        <p class="text-xs text-slate-600">
+          Read our in-depth research breakdown on ATP kinetics, sarcopenia reversal, and neurocognitive protection.
+        </p>
+      </div>
+      <a href="/blog/creatine-at-45" class="btn-primary shrink-0">
+        Read the Full Study
+      </a>
+    </div>
+
+  </div>
+</Layout>
+
+<script>
+  let currentUnit = 'lbs'; // 'lbs' or 'kg'
+  const weightInput = document.getElementById('weight-input') as HTMLInputElement;
+  const weightDisplay = document.getElementById('weight-display');
+  const ageInput = document.getElementById('age-input') as HTMLInputElement;
+  const ageDisplay = document.getElementById('age-display');
+  const activitySelect = document.getElementById('activity-select') as HTMLSelectElement;
+  const unitLbsBtn = document.getElementById('unit-lbs');
+  const unitKgBtn = document.getElementById('unit-kg');
+
+  const creatineResult = document.getElementById('creatine-result');
+  const proteinResult = document.getElementById('protein-result');
+  const waterResult = document.getElementById('water-result');
+
+  function calculate() {
+    if (!weightInput || !ageInput || !activitySelect) return;
+
+    let weightRaw = parseFloat(weightInput.value);
+    let weightKg = currentUnit === 'lbs' ? weightRaw * 0.453592 : weightRaw;
+    let age = parseInt(ageInput.value, 10);
+    let activity = activitySelect.value;
+
+    // Creatine formula: standard 0.04 - 0.05g/kg or 3g min, 5g standard, 8-10g for heavy athletes/older adults
+    let creatine = 3.0;
+    if (weightKg > 85 || age >= 45 || activity === 'strength' || activity === 'athlete') {
+      creatine = 5.0;
+    }
+    if (weightKg > 105 && (activity === 'strength' || activity === 'athlete')) {
+      creatine = 7.5;
+    }
+
+    // Protein target: 
+    // Sedentary: 1.2 g/kg
+    // Moderate: 1.6 g/kg
+    // Strength / 40+: 1.8 - 2.2 g/kg (to overcome anabolic resistance)
+    let proteinMultiplier = 1.4;
+    if (activity === 'sedentary') proteinMultiplier = 1.2;
+    if (activity === 'moderate') proteinMultiplier = 1.6;
+    if (activity === 'strength') proteinMultiplier = age >= 40 ? 2.0 : 1.8;
+    if (activity === 'athlete') proteinMultiplier = 2.2;
+
+    let proteinTotal = Math.round(weightKg * proteinMultiplier);
+
+    // Water target: ~35-40ml/kg + 500ml for creatine
+    let waterLiters = ((weightKg * 35) + 500) / 1000;
+
+    if (creatineResult) creatineResult.textContent = creatine.toFixed(1);
+    if (proteinResult) proteinResult.textContent = proteinTotal.toString();
+    if (waterResult) waterResult.textContent = waterLiters.toFixed(1);
+
+    if (weightDisplay) {
+      weightDisplay.textContent = `${weightInput.value} ${currentUnit}`;
+    }
+    if (ageDisplay) {
+      ageDisplay.textContent = `${ageInput.value} years`;
+    }
+  }
+
+  unitLbsBtn?.addEventListener('click', () => {
+    if (currentUnit === 'lbs') return;
+    currentUnit = 'lbs';
+    unitLbsBtn.classList.add('bg-slate-900', 'text-white');
+    unitLbsBtn.classList.remove('bg-slate-50', 'text-slate-700');
+    unitKgBtn?.classList.remove('bg-slate-900', 'text-white');
+    unitKgBtn?.classList.add('bg-slate-50', 'text-slate-700');
+
+    weightInput.min = '100';
+    weightInput.max = '350';
+    weightInput.value = '180';
+    calculate();
+  });
+
+  unitKgBtn?.addEventListener('click', () => {
+    if (currentUnit === 'kg') return;
+    currentUnit = 'kg';
+    unitKgBtn.classList.add('bg-slate-900', 'text-white');
+    unitKgBtn.classList.remove('bg-slate-50', 'text-slate-700');
+    unitLbsBtn?.classList.remove('bg-slate-900', 'text-white');
+    unitLbsBtn?.classList.add('bg-slate-50', 'text-slate-700');
+
+    weightInput.min = '45';
+    weightInput.max = '160';
+    weightInput.value = '82';
+    calculate();
+  });
+
+  weightInput?.addEventListener('input', calculate);
+  ageInput?.addEventListener('input', calculate);
+  activitySelect?.addEventListener('change', calculate);
+
+  calculate();
+</script>

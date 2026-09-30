@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vitaventure.vercel.app/sitemap-index.xml

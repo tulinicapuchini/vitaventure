@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CategoryPills from '../components/CategoryPills.astro';
+import NewsletterBox from '../components/NewsletterBox.astro';
+import VideoCard from '../components/VideoCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredPost = sortedPosts.find(p => p.data.featured) || sortedPosts[0];
+
+const sampleVideos = [
+  {
+    title: 'Creatine at 45: The 3 Surprising Brain & Longevity Benefits',
+    description: 'Why active adults over 40 need cellular ATP support more than 20-year-olds.',
+    duration: '0:54',
+    category: 'Longevity Short',
+    date: 'New'
+  },
+  {
+    title: 'Morning Dopamine & Sunlight Protocol (Huberman Method)',
+    description: 'How 10 minutes of direct morning sunlight resets cortisol and enhances deep sleep.',
+    duration: '0:48',
+    category: 'Circadian Protocol',
+    date: 'Popular'
+  },
+  {
+    title: 'Overcoming Anabolic Resistance After 40',
+    description: 'The leucine threshold and why 30g+ protein per meal is required to stimulate muscle synthesis.',
+    duration: '1:02',
+    category: 'Nutrition Breakdown',
+    date: 'Trending'
+  }
+];
+---
+
+<Layout
+  title="VitaVenture — Science-Backed Lifestyle, Longevity & Wellness Protocols"
+  description="Explore evidence-based nutrition, supplement protocols, strength after 40, and longevity science backed by clinical research and real-world results."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16">
+    
+    <!-- Hero Section: Featured Article Showcase -->
+    {featuredPost && (
+      <section class="editorial-card p-6 sm:p-10 lg:p-12 relative overflow-hidden bg-gradient-to-br from-white via-paper-100 to-sage-50/50">
+        <div class="max-w-3xl space-y-5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="badge-category bg-sage-800 text-white">
+              Featured Protocol
+            </span>
+            <span class="badge-category bg-slate-100 text-slate-700 border border-slate-200">
+              {featuredPost.data.category}
+            </span>
+            <span class="text-xs text-slate-500 font-medium">
+              &bull; {featuredPost.data.readTime}
+            </span>
+          </div>
+
+          <h1 class="serif-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-[1.15]">
+            <a href={`/blog/${featuredPost.slug}`} class="hover:text-sage-800 transition-colors">
+              {featuredPost.data.title}
+            </a>
+          </h1>
+
+          <p class="text-slate-600 text-base sm:text-lg leading-relaxed line-clamp-3">
+            {featuredPost.data.description}
+          </p>
+
+          <!-- Key Takeaways Preview Pills -->
+          {featuredPost.data.keyTakeaways && (
+            <div class="py-2 space-y-2 border-l-2 border-sage-700 pl-4 my-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Core Scientific Takeaways</span>
+              <p class="text-xs sm:text-sm text-slate-700 italic">
+                "{featuredPost.data.keyTakeaways[0]}"
+              </p>
+            </div>
+          )}
+
+          <div class="pt-4 flex flex-wrap items-center gap-4">
+            <a href={`/blog/${featuredPost.slug}`} class="btn-primary">
+              <span>Read Full Breakdown</span>
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+
+            <a href="/tools" class="btn-secondary">
+              <span>Try Dosage Calculator</span>
+              <span class="ml-1.5 text-xs text-amber-600 font-bold">⚡</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Category Browser & Filter Bar -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200/80 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-sage-800 block mb-1">Curated Research</span>
+          <h2 class="serif-heading text-2xl sm:text-3xl font-bold text-slate-900">
+            Browse by Health Pillar
+          </h2>
+        </div>
+        <CategoryPills activeCategory="All" />
+      </div>
+
+      <!-- Articles Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map((post) => (
+          <article class="editorial-card p-6 flex flex-col justify-between group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between text-xs">
+                <span class="badge-category bg-sage-100 text-sage-800">
+                  {post.data.category}
+                </span>
+                <span class="text-slate-500 font-medium">
+                  {post.data.readTime}
+                </span>
+              </div>
+
+              <h3 class="serif-heading text-xl font-bold text-slate-900 group-hover:text-sage-800 transition-colors leading-snug">
+                <a href={`/blog/${post.slug}`}>
+                  {post.data.title}
+                </a>
+              </h3>
+
+              <p class="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                {post.data.description}
+              </p>
+            </div>
+
+            <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-700">
+                  VV
+                </div>
+                <span class="text-xs font-medium text-slate-700">{post.data.author}</span>
+              </div>
+              <a href={`/blog/${post.slug}`} class="text-xs font-semibold text-sage-700 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                Read Article &rarr;
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Interactive Tool Callout Banner -->
+    <section class="rounded-3xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-white p-8 sm:p-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 max-w-xl text-center md:text-left">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-200 block">Personalized Prescription</span>
+        <h2 class="serif-heading text-2xl sm:text-3xl font-bold">
+          Calculate Your Exact Creatine & Daily Protein Target
+        </h2>
+        <p class="text-xs sm:text-sm text-amber-100 leading-relaxed">
+          Skip generic recommendations. Input your current weight, age, and training frequency to generate your customized cellular saturation and hydration protocol.
+        </p>
+      </div>
+      <a href="/tools" class="px-6 py-3.5 bg-white hover:bg-paper-100 text-slate-900 font-bold text-sm rounded-xl shadow-md transition-all active:scale-95 shrink-0">
+        Launch Calculator &rarr;
+      </a>
+    </section>
+
+    <!-- Video Showcase Strip: Shorts & Reels -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200/80 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-sage-800 block mb-1">Visual Knowledge</span>
+          <h2 class="serif-heading text-2xl sm:text-3xl font-bold text-slate-900">
+            60-Second Video Breakdowns
+          </h2>
+        </div>
+        <a href="/videos" class="text-xs font-semibold text-sage-700 hover:text-sage-900 flex items-center gap-1">
+          View All Video Reels &rarr;
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {sampleVideos.map((video) => (
+          <VideoCard
+            title={video.title}
+            description={video.description}
+            duration={video.duration}
+            category={video.category}
+            date={video.date}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- The Sunday Protocol Newsletter Capture -->
+    <NewsletterBox />
+
+  </div>
+</Layout>
